@@ -136,11 +136,46 @@
         <input type="email" name="email" placeholder="Correo electrónico" class="w-full p-3 border border-gray-300 rounded" required>
         <input type="text" name="phone" placeholder="Teléfono" class="w-full p-3 border border-gray-300 rounded">
         <textarea name="message" placeholder="Cuéntanos por qué te interesa unirte a KAPTA" rows="4" class="w-full p-3 border border-gray-300 rounded"></textarea>
-        <input type="hidden" name="_next" value="https://kaptarecursosestrategicos.github.io/gracias.html">
-  <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">Enviar</button>
-</form>
-    </div>
-  </section>-->
+        <!-- Evitar SPAM -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">Enviar</button>
+    </form>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-6">
+    <p>&copy; 2025 KAPTA Recursos Estratégicos. Todos los derechos reservados.</p>
+  </footer>
+</div>
+
+<!-- Script para mostrar agradecimiento -->
+  <script>
+    function mostrarGracias(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      // Enviar el formulario manualmente con fetch
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          document.getElementById("contenido-principal").style.display = "none";
+          document.getElementById("gracias").style.display = "flex";
+        } else {
+          alert("Error al enviar el formulario. Intenta de nuevo.");
+        }
+      }).catch(error => {
+        alert("Error de conexión. Intenta más tarde.");
+      });
+    }
+  </script>
 
   <!-- Contacto -->
   <section id="contacto" class="py-16 bg-white">
