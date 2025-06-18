@@ -6,10 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KAPTA Recursos Estratégicos</title>
   <script src="https://cdn.tailwindcss.com"></script>
+<style>
+    #gracias {
+      display: none;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans">
-  <!-- Header -->
+
+  <!-- Mensaje de gracias oculto -->
+  <div id="gracias" class="min-h-screen flex items-center justify-center bg-blue-600 text-white text-center p-8">
+    <div>
+      <img src="assets/logo-kapta.png" alt="Logo de KAPTA" class="mx-auto mb-6 h-16">
+      <h1 class="text-4xl font-bold mb-4">¡Gracias por contactarnos!</h1>
+      <p class="text-lg">Hemos recibido tu mensaje y nos pondremos en contacto contigo muy pronto.</p>
+      <a href="/" class="mt-6 inline-block bg-white text-blue-600 px-6 py-2 rounded font-semibold hover:bg-gray-200 transition">Volver al inicio</a>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div id="contenido-principal">
+  <!-- Header --> 
   <header class="bg-white shadow">
     <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
       <img src="assets/logo-kapta.png" alt="Logo de KAPTA" class="h-12">
@@ -128,14 +146,13 @@
   <section id="contacto" class="py-16 bg-white">
   <div class="max-w-xl mx-auto px-4">
     <h2 class="text-3xl font-bold mb-6 text-center">Contáctanos</h2>
-    <form action="https://formsubmit.co/kaptarecursosestrategicos@gmail.com" method="POST" class="space-y-4">
-      <input type="text" name="name" placeholder="Nombre" class="w-full p-3 border border-gray-300 rounded" required>
-      <input type="email" name="email" placeholder="Correo Electrónico" class="w-full p-3 border border-gray-300 rounded" required>
+    <form action="https://formsubmit.co/kaptarecursosestrategicos@gmail.com" method="POST" class="space-y-4" onsubmit="mostrarGracias(event)">
+      <input type="text" name="name" placeholder="Nombre completo" class="w-full p-3 border border-gray-300 rounded" required>
+      <input type="text" name="company" placeholder="Nombre de la empresa" class="w-full p-3 border border-gray-300 rounded">
+      <input type="text" name="phone" placeholder="Número de teléfono" class="w-full p-3 border border-gray-300 rounded">
+      <input type="email" name="email" placeholder="Correo electrónico" class="w-full p-3 border border-gray-300 rounded" required>
       <textarea name="message" placeholder="Mensaje" rows="4" class="w-full p-3 border border-gray-300 rounded" required></textarea>
-
-      <!-- Puedes personalizar el siguiente campo para redirigir a una página de agradecimiento -->
-      <input type="hidden" name="_next" value="https://kaptarecursosestrategicos.github.io/gracias.html">
-
+      
       <!-- Evitar SPAM -->
       <input type="hidden" name="_captcha" value="false">
 
@@ -148,7 +165,34 @@
   <footer class="bg-gray-800 text-white text-center py-6">
     <p>&copy; 2025 KAPTA Recursos Estratégicos. Todos los derechos reservados.</p>
   </footer>
+</div>
+
+<!-- Script para mostrar agradecimiento -->
+  <script>
+    function mostrarGracias(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      // Enviar el formulario manualmente con fetch
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          document.getElementById("contenido-principal").style.display = "none";
+          document.getElementById("gracias").style.display = "flex";
+        } else {
+          alert("Error al enviar el formulario. Intenta de nuevo.");
+        }
+      }).catch(error => {
+        alert("Error de conexión. Intenta más tarde.");
+      });
+    }
+  </script>
 
 </body>
-
 </html>
